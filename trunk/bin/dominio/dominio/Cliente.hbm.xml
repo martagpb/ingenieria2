@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="dominio.Cliente" table="cliente" catalog="prueba">
+        <id name="dni" type="string">
+            <column name="Dni" length="15" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="Nombre" length="45" not-null="true" />
+        </property>
+        <property name="apellido1" type="string">
+            <column name="Apellido1" length="45" not-null="true" />
+        </property>
+        <property name="apellido2" type="string">
+            <column name="Apellido2" length="45" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="Direccion" length="45" not-null="true" />
+        </property>
+        <property name="localidad" type="string">
+            <column name="Localidad" length="45" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="Telefono" length="12" />
+        </property>
+        <property name="fechaNac" type="timestamp">
+            <column name="FechaNac" length="0" not-null="true" />
+        </property>
+        <set name="socios" inverse="true">
+            <key>
+                <column name="Dni" length="15" not-null="true" />
+            </key>
+            <one-to-many class="dominio.Socio" />
+        </set>
+    </class>
+</hibernate-mapping>

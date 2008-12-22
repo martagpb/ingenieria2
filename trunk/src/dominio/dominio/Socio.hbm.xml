@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="dominio.Socio" table="socio" catalog="prueba">
+        <composite-id name="id" class="dominio.SocioId">
+            <key-property name="codSocio" type="int">
+                <column name="Cod_Socio" />
+            </key-property>
+            <key-property name="dni" type="string">
+                <column name="Dni" length="15" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="cliente" class="dominio.Cliente" update="false" insert="false" fetch="select">
+            <column name="Dni" length="15" not-null="true" />
+        </many-to-one>
+        <property name="fechaIngreso" type="timestamp">
+            <column name="Fecha_Ingreso" length="0" not-null="true" />
+        </property>
+        <property name="cuota" type="double">
+            <column name="Cuota" precision="22" scale="0" not-null="true" />
+        </property>
+        <property name="numeroMiembros" type="int">
+            <column name="Numero_Miembros" not-null="true" />
+        </property>
+        <property name="cuentaBanco" type="string">
+            <column name="Cuenta_Banco" length="20" not-null="true" />
+        </property>
+        <set name="socioFamiliars" inverse="true">
+            <key>
+                <column name="Cod_Socio" not-null="true" />
+                <column name="dni" length="15" not-null="true" />
+            </key>
+            <one-to-many class="dominio.SocioFamiliar" />
+        </set>
+    </class>
+</hibernate-mapping>
