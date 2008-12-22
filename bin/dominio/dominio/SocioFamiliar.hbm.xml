@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="dominio.SocioFamiliar" table="socio_familiar" catalog="prueba">
+        <composite-id name="id" class="dominio.SocioFamiliarId">
+            <key-property name="dni" type="string">
+                <column name="dni" length="15" />
+            </key-property>
+            <key-property name="codSocio" type="int">
+                <column name="Cod_Socio" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="socio" class="dominio.Socio" update="false" insert="false" fetch="select">
+            <column name="Cod_Socio" not-null="true" />
+            <column name="dni" length="15" not-null="true" />
+        </many-to-one>
+        <set name="recibos" inverse="true">
+            <key>
+                <column name="Dni" length="15" not-null="true" />
+                <column name="Cod_Socio" not-null="true" />
+            </key>
+            <one-to-many class="dominio.Recibo" />
+        </set>
+        <set name="horarios" inverse="true">
+            <key>
+                <column name="Dni" length="15" not-null="true" />
+                <column name="Cod_Socio" not-null="true" />
+            </key>
+            <one-to-many class="dominio.Horario" />
+        </set>
+    </class>
+</hibernate-mapping>

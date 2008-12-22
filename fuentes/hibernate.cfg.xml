@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.password">8887</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/prueba</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property><mapping
+        	resource="dominio.dominio/Articulo.java" /><mapping resource="dominio.dominio/DetalleRecibo.java" /><mapping
+    		resource="dominio.dominio/Horario.java" /><mapping
+    		resource="dominio.dominio/HorarioId.java" /><mapping
+    		resource="dominio.dominio/Personal.java" /><mapping
+    		resource="dominio.dominio/Pista.java" /><mapping
+    		resource="dominio.dominio/Recibo.java" /><mapping
+    		resource="dominio.dominio/Socio.java" /><mapping
+    		resource="dominio.dominio/SocioFamiliar.java" /><mapping
+    		resource="dominio.dominio/SocioFamiliarId.java" /><mapping
+    		resource="dominio.dominio/Cliente.java" /><mapping
+    		resource="dominio.dominio/SocioId.java" />
+    </session-factory>
+</hibernate-configuration>
