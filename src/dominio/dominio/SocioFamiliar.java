@@ -1,6 +1,6 @@
 package dominio.dominio;
 
-// Generated 02-dic-2008 9:49:40 by Hibernate Tools 3.2.2.GA
+// Generated 02-ene-2009 17:10:24 by Hibernate Tools 3.2.4.CR1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,14 +18,11 @@ public class SocioFamiliar implements java.io.Serializable {
 	public SocioFamiliar() {
 	}
 
-	public SocioFamiliar(SocioFamiliarId id, Socio socio) {
-		this.id = id;
+	public SocioFamiliar(Socio socio) {
 		this.socio = socio;
 	}
 
-	public SocioFamiliar(SocioFamiliarId id, Socio socio, Set recibos,
-			Set horarios) {
-		this.id = id;
+	public SocioFamiliar(Socio socio, Set recibos, Set horarios) {
 		this.socio = socio;
 		this.recibos = recibos;
 		this.horarios = horarios;

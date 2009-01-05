@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<!-- Generated 02-ene-2009 17:10:26 by Hibernate Tools 3.2.4.CR1 -->
 <hibernate-mapping>
-    <class name="dominio.Pista" table="pista" catalog="prueba">
+    <class name="dominio.dominio.Pista" table="pista" catalog="prueba">
         <id name="nombre" type="string">
             <column name="Nombre" length="20" />
             <generator class="assigned" />
@@ -15,7 +15,7 @@
             <key>
                 <column name="Pista" length="20" not-null="true" />
             </key>
-            <one-to-many class="dominio.Horario" />
+            <one-to-many class="dominio.dominio.Horario" />
         </set>
     </class>
 </hibernate-mapping>
