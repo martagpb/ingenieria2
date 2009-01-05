@@ -1,5 +1,5 @@
 package interfaces;
-
+import aplicacion.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -276,6 +276,27 @@ public class JPGestion_Alta extends JPanel {
 			aceptar.setBounds(new Rectangle(304, 515, 123, 27));
 			aceptar.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/ok.jpg"));
 			aceptar.setText("Aceptar");
+			aceptar.addMouseListener(new java.awt.event.MouseListener() {
+				
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					
+					Crearcliente c =new Crearcliente();
+					String s=(String)jComboBox_tipo_cliente.getSelectedItem();
+					if (s.equalsIgnoreCase("Cliente")){
+						c.añadircliente(dni.getText(),nombre.getText(),apellido1.getText(),
+								apellido2.getText(), direccion.getText(),poblacion.getText(),
+								telefono.getText());
+					}
+				}
+				public void mousePressed(java.awt.event.MouseEvent e) {
+				}
+				public void mouseReleased(java.awt.event.MouseEvent e) {
+				}
+				public void mouseEntered(java.awt.event.MouseEvent e) {
+				}
+				public void mouseExited(java.awt.event.MouseEvent e) {
+				}
+			});
 		}
 		return aceptar;
 	}

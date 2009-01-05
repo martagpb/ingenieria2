@@ -3,17 +3,35 @@ package interfaces;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import aplicacion.Sesion;
+
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 public class JFIdentificar extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -29,6 +47,15 @@ public class JFIdentificar extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
+	
+	
+	public static void main(String[] args) {
+
+		JFIdentificar inst = new JFIdentificar();
+		inst.setLocationRelativeTo(null);
+		inst.setVisible(true);
+}
+
 	public JFIdentificar() {
 		super();
 		initialize();
@@ -43,6 +70,11 @@ public class JFIdentificar extends JFrame {
 		this.setSize(548, 266);
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
+		this.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				thisMouseClicked(evt);
+			}
+		});
 	}
 
 	/**
@@ -130,8 +162,31 @@ public class JFIdentificar extends JFrame {
 			aceptar_1.setBounds(new Rectangle(381, 149, 103, 26));
 			aceptar_1.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/ok.jpg"));
 			aceptar_1.setText("Aceptar");
+			aceptar_1.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					aceptar_1MouseClicked(evt);
+				}
+			});
 		}
 		return aceptar_1;
+	}
+	
+	private void thisMouseClicked(MouseEvent evt) {
+		System.out.println("this.mouseClicked, event="+evt);
+		//TODO add your code for this.mouseClicked
+	}
+	
+	private void aceptar_1MouseClicked(MouseEvent evt) {
+		Sesion s =new Sesion();
+		boolean resultado=s.comprobarSesion(usuario.getText(),contraseña.getText());
+		if (resultado ==true){
+			JFMenu m =new JFMenu();
+			m.setVisible(true);
+			this.setVisible(false);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "El usuario no existe o la contraseña es incorrecta");
+		}
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

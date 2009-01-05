@@ -152,7 +152,9 @@ public void crearCliente(Cliente cliente) throws HibernateException {
 		Transaction tx = null;
 		try {
 			tx = sesion.beginTransaction();
-			sesion.persist(cliente);
+			//cliente.toString(cliente);
+			sesion.save(cliente);
+			//sesion.persist(cliente);
 			tx.commit();
 			
 		}
@@ -468,7 +470,6 @@ public boolean borrarHorarioId(HorarioId idh) throws HibernateException {
 public void crearPersonal(Personal personal) throws HibernateException {
 	
 	Session sesion= sessionFactory.openSession();
-	
 	Transaction tx = null;
 	try {
 		tx = sesion.beginTransaction();
@@ -508,26 +509,27 @@ public boolean borrarPersonal(String usuario) throws HibernateException {
 
 
 
-public Personal leerPersonal(String usuario) throws HibernateException {
+public Personal leerPersonal(String usuario, String pass) throws HibernateException {
 	
 	Personal persona=new Personal();
-			
 	Session sesion = sessionFactory.openSession();
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	persona = (Personal) sesion.load(Personal.class,usuario);
-	
+	persona=(Personal) sesion.get(Personal.class, usuario);
 	tx.commit();
 	}
 	catch (HibernateException he) {
-	if (tx!=null) tx.rollback();
-	throw he;
+		if (tx!=null) tx.rollback();
+		System.out.println(he.toString());
+		throw he;
+		
 	}
+
 	finally {
-	sesion.close();
+		sesion.close();
+		
 	}
-	
 	return persona;
 	
 }

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<!-- Generated 02-ene-2009 17:10:26 by Hibernate Tools 3.2.4.CR1 -->
 <hibernate-mapping>
-    <class name="dominio.DetalleRecibo" table="detalle_recibo" catalog="prueba">
+    <class name="dominio.dominio.DetalleRecibo" table="detalle_recibo" catalog="prueba">
         <id name="iddetalleRecibo" type="int">
             <column name="iddetalle_Recibo" />
             <generator class="identity" />
         </id>
-        <many-to-one name="recibo" class="dominio.Recibo" fetch="select">
+        <many-to-one name="recibo" class="dominio.dominio.Recibo" fetch="select">
             <column name="Recibo" not-null="true" />
         </many-to-one>
         <property name="concepto" type="string">

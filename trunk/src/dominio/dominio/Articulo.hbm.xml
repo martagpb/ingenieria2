@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<!-- Generated 02-ene-2009 17:10:26 by Hibernate Tools 3.2.4.CR1 -->
 <hibernate-mapping>
-    <class name="dominio.Articulo" table="articulo" catalog="prueba">
+    <class name="dominio.dominio.Articulo" table="articulo" catalog="prueba">
         <id name="idarticulo" type="int">
             <column name="idarticulo" />
             <generator class="identity" />

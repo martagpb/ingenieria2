@@ -1,6 +1,6 @@
 package dominio.dominio;
 
-// Generated 02-dic-2008 9:49:40 by Hibernate Tools 3.2.2.GA
+// Generated 02-ene-2009 17:10:24 by Hibernate Tools 3.2.4.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,14 +24,15 @@ public class Cliente implements java.io.Serializable {
 	public Cliente() {
 	}
 
-	public Cliente(String dni, String nombre, String apellido1,
-			String direccion, String localidad, Date fechaNac) {
+	public Cliente(String dni, String nombre, String apellido1,String apellido2,
+			String direccion, String localidad,String telefono) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
+		this.apellido2=apellido2;
 		this.direccion = direccion;
 		this.localidad = localidad;
-		this.fechaNac = fechaNac;
+		this.telefono=telefono;
 	}
 
 	public Cliente(String dni, String nombre, String apellido1,
@@ -119,5 +120,15 @@ public class Cliente implements java.io.Serializable {
 	public void setSocios(Set socios) {
 		this.socios = socios;
 	}
-
+	public void toString(Cliente cliente){
+		System.out.println("Cliente");
+		System.out.println(cliente.getDni());
+		System.out.println(cliente.getNombre());
+		System.out.println(cliente.getApellido1());
+		System.out.println(cliente.getApellido2());
+		System.out.println(cliente.getDireccion());
+		System.out.println(cliente.getLocalidad());
+		System.out.println(cliente.getTelefono());
+	}
+		
 }

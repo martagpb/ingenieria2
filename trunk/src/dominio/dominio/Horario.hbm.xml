@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-dic-2008 9:49:41 by Hibernate Tools 3.2.2.GA -->
+<!-- Generated 02-ene-2009 17:10:26 by Hibernate Tools 3.2.4.CR1 -->
 <hibernate-mapping>
-    <class name="dominio.Horario" table="horario" catalog="prueba">
-        <composite-id name="id" class="dominio.HorarioId">
+    <class name="dominio.dominio.Horario" table="horario" catalog="prueba">
+        <composite-id name="id" class="dominio.dominio.HorarioId">
             <key-property name="pista" type="string">
                 <column name="Pista" length="20" />
             </key-property>
@@ -15,11 +15,11 @@
                 <column name="Hora" length="0" />
             </key-property>
         </composite-id>
-        <many-to-one name="socioFamiliar" class="dominio.SocioFamiliar" fetch="select">
+        <many-to-one name="socioFamiliar" class="dominio.dominio.SocioFamiliar" fetch="select">
             <column name="Dni" length="15" not-null="true" />
             <column name="Cod_Socio" not-null="true" />
         </many-to-one>
-        <many-to-one name="pista" class="dominio.Pista" update="false" insert="false" fetch="select">
+        <many-to-one name="pista" class="dominio.dominio.Pista" update="false" insert="false" fetch="select">
             <column name="Pista" length="20" not-null="true" />
         </many-to-one>
         <property name="importe" type="double">

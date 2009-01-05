@@ -1,6 +1,6 @@
 package dominio.dominio;
 
-// Generated 02-dic-2008 9:49:40 by Hibernate Tools 3.2.2.GA
+// Generated 02-ene-2009 17:10:24 by Hibernate Tools 3.2.4.CR1
 
 import java.util.HashSet;
 import java.util.Set;
