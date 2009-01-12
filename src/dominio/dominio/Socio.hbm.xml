@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 02-ene-2009 17:10:26 by Hibernate Tools 3.2.4.CR1 -->
+<!-- Generated 08-ene-2009 19:15:20 by Hibernate Tools 3.2.4.CR1 -->
 <hibernate-mapping>
     <class name="dominio.dominio.Socio" table="socio" catalog="prueba">
         <composite-id name="id" class="dominio.dominio.SocioId">
@@ -21,8 +21,8 @@
         <property name="cuota" type="double">
             <column name="Cuota" precision="22" scale="0" not-null="true" />
         </property>
-        <property name="numeroMiembros" type="int">
-            <column name="Numero_Miembros" not-null="true" />
+        <property name="numeroMiembros" type="java.lang.Integer">
+            <column name="Numero_Miembros" />
         </property>
         <property name="cuentaBanco" type="string">
             <column name="Cuenta_Banco" length="20" not-null="true" />
