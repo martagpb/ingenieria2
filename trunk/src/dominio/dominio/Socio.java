@@ -1,6 +1,6 @@
 package dominio.dominio;
 
-// Generated 02-ene-2009 17:10:24 by Hibernate Tools 3.2.4.CR1
+// Generated 08-ene-2009 19:15:20 by Hibernate Tools 3.2.4.CR1
 
 import java.util.Date;
 
@@ -13,7 +13,7 @@ public class Socio implements java.io.Serializable {
 	private Cliente cliente;
 	private Date fechaIngreso;
 	private double cuota;
-	private int numeroMiembros;
+	private Integer numeroMiembros;
 	private String cuentaBanco;
 	private SocioFamiliar socioFamiliar;
 
@@ -21,17 +21,17 @@ public class Socio implements java.io.Serializable {
 	}
 
 	public Socio(SocioId id, Cliente cliente, Date fechaIngreso, double cuota,
-			int numeroMiembros, String cuentaBanco) {
+			String cuentaBanco) {
 		this.id = id;
 		this.cliente = cliente;
 		this.fechaIngreso = fechaIngreso;
 		this.cuota = cuota;
-		this.numeroMiembros = numeroMiembros;
 		this.cuentaBanco = cuentaBanco;
 	}
 
 	public Socio(SocioId id, Cliente cliente, Date fechaIngreso, double cuota,
-			int numeroMiembros, String cuentaBanco, SocioFamiliar socioFamiliar) {
+			Integer numeroMiembros, String cuentaBanco,
+			SocioFamiliar socioFamiliar) {
 		this.id = id;
 		this.cliente = cliente;
 		this.fechaIngreso = fechaIngreso;
@@ -73,11 +73,11 @@ public class Socio implements java.io.Serializable {
 		this.cuota = cuota;
 	}
 
-	public int getNumeroMiembros() {
+	public Integer getNumeroMiembros() {
 		return this.numeroMiembros;
 	}
 
-	public void setNumeroMiembros(int numeroMiembros) {
+	public void setNumeroMiembros(Integer numeroMiembros) {
 		this.numeroMiembros = numeroMiembros;
 	}
 
