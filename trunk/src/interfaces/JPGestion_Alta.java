@@ -282,10 +282,13 @@ public class JPGestion_Alta extends JPanel {
 					
 					Crearcliente c =new Crearcliente();
 					String s=(String)jComboBox_tipo_cliente.getSelectedItem();
-					if (s.equalsIgnoreCase("Cliente")){
-						c.añadircliente(dni.getText(),nombre.getText(),apellido1.getText(),
-								apellido2.getText(), direccion.getText(),poblacion.getText(),
-								telefono.getText());
+					c.añadircliente(dni.getText(),nombre.getText(),apellido1.getText(),
+							apellido2.getText(), direccion.getText(),poblacion.getText(),
+							telefono.getText());
+					// falta la fecha de nacimiento
+					if (s.equalsIgnoreCase("SocioIndividual ")){
+						double mensualidad=Double.parseDouble(cuota.getText());
+						c.añadirSocio(dni.getText(),mensualidad, cuenta.getText());
 					}
 				}
 				public void mousePressed(java.awt.event.MouseEvent e) {
