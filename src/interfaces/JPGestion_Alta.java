@@ -286,9 +286,13 @@ public class JPGestion_Alta extends JPanel {
 							apellido2.getText(), direccion.getText(),poblacion.getText(),
 							telefono.getText());
 					// falta la fecha de nacimiento
-					if (s.equalsIgnoreCase("SocioIndividual ")){
+					if (s.equalsIgnoreCase("Socio Individual")){
+						System.out.println("Entro pa crear un socio");
 						double mensualidad=Double.parseDouble(cuota.getText());
 						c.añadirSocio(dni.getText(),mensualidad, cuenta.getText());
+					}
+					if (s.equalsIgnoreCase("Socio Familiar")){
+						
 					}
 				}
 				public void mousePressed(java.awt.event.MouseEvent e) {
