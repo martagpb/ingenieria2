@@ -20,12 +20,13 @@ public class Socio implements java.io.Serializable {
 	public Socio() {
 	}
 
-	public Socio(SocioId id, Cliente cliente, Date fechaIngreso, double cuota,
+	public Socio(SocioId id, Cliente cliente, Date fechaIngreso, double cuota,int n,
 			String cuentaBanco) {
 		this.id = id;
 		this.cliente = cliente;
 		this.fechaIngreso = fechaIngreso;
 		this.cuota = cuota;
+		numeroMiembros=n;
 		this.cuentaBanco = cuentaBanco;
 	}
 

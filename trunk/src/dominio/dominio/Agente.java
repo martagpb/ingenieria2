@@ -198,7 +198,7 @@ public boolean borrarCliente(String dni) throws HibernateException {
 		Transaction tx = null;
 		try {
 		tx = sesion.beginTransaction();
-		cliente = (Cliente) sesion.load(Cliente.class,dni);
+		cliente = (Cliente) sesion.get(Cliente.class,dni);
 		
 		tx.commit();
 		}
@@ -790,8 +790,14 @@ public Socio leerSocio(int id) throws HibernateException {
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	socio = (Socio) sesion.load(Socio.class,id);
+	Query q=sesion.createSQLQuery("SELECT * FROM socio where socio.Cod_Socio='"+id+"'");
+		socio=(Socio)q.uniqueResult();
 	
+		/*query1.setLong("aId",Long.valueOf(1));
+		List list1 = query1.list();
+		Iterator iter1 = list1.iterator();
+		while (iter1.hasNext()) {
+		Cliente clienteQuer1 = (Cliente)iter1.next();*/
 	tx.commit();
 	}
 	catch (HibernateException he) {
@@ -803,6 +809,50 @@ public Socio leerSocio(int id) throws HibernateException {
 	}
 	
 	return socio;
+	
+}
+
+
+public int leerSocio(String dni){
+	int n;
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	Query q=sesion.createSQLQuery("SELECT Cod_Socio FROM socio where socio.dni='"+dni+"'");
+		n=(Integer)q.uniqueResult();
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return n;
+	
+}
+public int maxSocio(){
+	int n;
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	Query q=sesion.createSQLQuery("SELECT Max(Cod_Socio)  FROM Socio");
+		n=(Integer)q.uniqueResult();
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return n;
 	
 }
 
