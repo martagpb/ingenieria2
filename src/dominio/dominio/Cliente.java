@@ -48,7 +48,7 @@ public class Cliente implements java.io.Serializable {
 	}
 	
 	public Cliente(String dni, String nombre, String apellido1,String apellido2,
-			String direccion, String localidad, String telefono) {
+			String direccion, String localidad, String telefono, Date fecha) {
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido1 = apellido1;
@@ -56,6 +56,7 @@ public class Cliente implements java.io.Serializable {
 		this.direccion = direccion;
 		this.localidad = localidad;
 		this.telefono=telefono;
+		this.fechaNac=fecha;
 	}
 
 	public String getDni() {
