@@ -69,10 +69,10 @@ public class JFIdentificar extends JFrame {
 	private void initialize() {
 		this.setSize(548, 266);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle("Identificar");
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-				thisMouseClicked(evt);
+				mouseClicked(evt);
 			}
 		});
 	}
@@ -171,10 +171,7 @@ public class JFIdentificar extends JFrame {
 		return aceptar_1;
 	}
 	
-	private void thisMouseClicked(MouseEvent evt) {
-		System.out.println("this.mouseClicked, event="+evt);
-		//TODO add your code for this.mouseClicked
-	}
+
 	
 	private void aceptar_1MouseClicked(MouseEvent evt) {
 		Sesion s =new Sesion();

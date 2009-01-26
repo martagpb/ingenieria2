@@ -1,6 +1,9 @@
 package interfaces;
 
+import dominio.dominio.*;
+import aplicacion.*;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -8,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import aplicacion.Crearcliente;
 
 public class JFFamiliar extends JFrame {
 
@@ -31,6 +36,7 @@ public class JFFamiliar extends JFrame {
 		super();
 		initialize();
 	}
+	
 
 	/**
 	 * This method initializes this
@@ -41,7 +47,7 @@ public class JFFamiliar extends JFrame {
 
 		this.setSize(521, 300);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle("Buscar");
 	}
 
 	/**
@@ -145,8 +151,22 @@ public class JFFamiliar extends JFrame {
 			aceptar.setBounds(new Rectangle(198, 209, 103, 24));
 			aceptar.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/ok.jpg"));
 			aceptar.setText("Aceptar");
+			aceptar.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent evt) {
+					aceptar_1MouseClicked(evt);
+				}
+			});
 		}
 		return aceptar;
+	}
+	private void aceptar_1MouseClicked(MouseEvent evt) {
+		// Devolveriamos el cod_Socio
+		this.setVisible(false);
+		DNI.setText("");
+		nombre.setText("");
+		apellidos.setText("");
+		codigo.setText("");
+		
 	}
 
 	/**
@@ -160,6 +180,17 @@ public class JFFamiliar extends JFrame {
 			buscar.setBounds(new Rectangle(258, 33, 112, 23));
 			buscar.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/icono-lupa.jpg"));
 			buscar.setText("Buscar");
+			buscar.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					Crearcliente c =new Crearcliente();
+					Cliente cl=c.cargarSocio(DNI.getText());
+					nombre.setText(cl.getNombre());
+					apellidos.setText(cl.getApellido1()+" "+cl.getApellido2());
+					int n=c.devolverSocio(DNI.getText());
+					codigo.setText(n+"");
+					
+				}
+			});
 		}
 		return buscar;
 	}
