@@ -1,5 +1,6 @@
 package interfaces;
 import aplicacion.*;
+import dominio.dominio.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -13,8 +14,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -29,6 +35,8 @@ import javax.swing.JTextField;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+
+
 public class JPGestion_Alta extends JPanel {
 
 	private static final long serialVersionUID = 1L;
@@ -49,7 +57,7 @@ public class JPGestion_Alta extends JPanel {
 	private JTextField poblacion = null;
 	private JLabel tipo_label = null;
 	private JLabel codigo_label = null;
-	private JTextField codigo = null;
+	private JTextField codigo =null;
 	private JLabel dni1_label = null;
 	private JTextField dni = null;
 	private JButton aceptar = null;
@@ -59,6 +67,9 @@ public class JPGestion_Alta extends JPanel {
 	private JTextField cuota = null;
 	private JButton calcular_cuota = null;
 	private JButton codigo_titular = null;
+	private JLabel Fecha_nacLabel = null;
+	private JTextField fecha_nac = null;
+	private Date fecha_nacimiento;
 
 	/**
 	 * This is the default constructor
@@ -76,12 +87,18 @@ public class JPGestion_Alta extends JPanel {
 	 */
 	private void initialize() {
 
+		Fecha_nacLabel = new JLabel();
+		Fecha_nacLabel.setBounds(new Rectangle(92, 421, 129, 21));
+		Fecha_nacLabel.setName("");
+		Fecha_nacLabel.setText("Fecha de Nacimiento");
 		cuota_label = new JLabel();
-		cuota_label.setBounds(new Rectangle(122, 460, 46, 16));
+		cuota_label.setBounds(new Rectangle(118, 501, 46, 16));
 		cuota_label.setText("Cuota");
 		cuenta = new JLabel();
-		cuenta.setBounds(new Rectangle(122, 424, 70, 16));
+		cuenta.setBounds(new Rectangle(118, 465, 70, 16));
+		cuenta.setEnabled(true);
 		cuenta.setText("Nº Cuenta");
+		cuenta.setVisible(false);
 		alta_label = new JLabel();
 		alta_label.setBounds(239, 49, 227, 24);
 		alta_label.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -92,7 +109,7 @@ public class JPGestion_Alta extends JPanel {
 		dni1_label.setBounds(new Rectangle(119, 284, 38, 16));
 		codigo_label = new JLabel();
 
-		codigo_label.setText("Código de Socio");
+		codigo_label.setText("Cod Socio");
 		codigo_label.setBounds(new Rectangle(116, 153, 108, 16));
 		tipo_label = new JLabel();
 		tipo_label.setText("Tipo de Cliente");
@@ -145,6 +162,8 @@ public class JPGestion_Alta extends JPanel {
 		this.add(getCodigo_titular(), null);
 		this.add(getJComboBox_tipo_cliente());
 		this.add(getEuros_cuota());
+		this.add(Fecha_nacLabel, null);
+		this.add(getFecha_nac(), null);
 		codigo_label.setVisible(false);
 		codigo.setVisible(false);
 		codigo_titular.setVisible(false);
@@ -273,26 +292,39 @@ public class JPGestion_Alta extends JPanel {
 	private JButton getAceptar() {
 		if (aceptar == null) {
 			aceptar = new JButton();
-			aceptar.setBounds(new Rectangle(304, 515, 123, 27));
+			aceptar.setBounds(new Rectangle(300, 541, 123, 27));
 			aceptar.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/ok.jpg"));
 			aceptar.setText("Aceptar");
 			aceptar.addMouseListener(new java.awt.event.MouseListener() {
 				
 				public void mouseClicked(java.awt.event.MouseEvent e) {
-					
+					boolean resultado=false;
 					Crearcliente c =new Crearcliente();
 					String s=(String)jComboBox_tipo_cliente.getSelectedItem();
-					c.añadircliente(dni.getText(),nombre.getText(),apellido1.getText(),
+					SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy");
+					try{
+						fecha_nacimiento=sdf.parse(fecha_nac.getText());
+					
+					
+					resultado=c.añadircliente(dni.getText(),nombre.getText(),apellido1.getText(),
 							apellido2.getText(), direccion.getText(),poblacion.getText(),
-							telefono.getText());
-					// falta la fecha de nacimiento
-					if (s.equalsIgnoreCase("Socio Individual")){
-						System.out.println("Entro pa crear un socio");
-						double mensualidad=Double.parseDouble(cuota.getText());
-						c.añadirSocio(dni.getText(),mensualidad, cuenta.getText());
+							telefono.getText(), fecha_nacimiento); 
 					}
-					if (s.equalsIgnoreCase("Socio Familiar")){
+					catch(Exception formatofecha){
+						JOptionPane.showMessageDialog(null, "El formato de la fecha debe ser dd/MM/yyyy ");
+					}
+					if (s.equalsIgnoreCase("Socio Individual")){
 						
+						double mensualidad=Double.parseDouble(cuota.getText());
+						resultado=c.añadirSocio(dni.getText(),mensualidad, nº_cuenta.getText());
+					}
+					
+					
+					
+					if (resultado==false) JOptionPane.showMessageDialog(null, "Error en los datos no se ha podido guardar en Base de Datos");
+					else{
+						limpiarinterfaz();
+						JOptionPane.showMessageDialog(null, "Los datos se han guardado en Base de Datos");
 					}
 				}
 				public void mousePressed(java.awt.event.MouseEvent e) {
@@ -316,7 +348,8 @@ public class JPGestion_Alta extends JPanel {
 	private JTextField getNº_cuenta() {
 		if (nº_cuenta == null) {
 			nº_cuenta = new JTextField();
-			nº_cuenta.setBounds(235, 422, 334, 20);
+			nº_cuenta.setBounds(231, 463, 334, 20);
+			nº_cuenta.setVisible(false);
 		}
 		return nº_cuenta;
 	}
@@ -336,7 +369,7 @@ public class JPGestion_Alta extends JPanel {
 	private JTextField getCuota() {
 		if (cuota == null) {
 			cuota = new JTextField();
-			cuota.setBounds(new Rectangle(233, 458, 84, 20));
+			cuota.setBounds(new Rectangle(229, 499, 84, 20));
 		}
 		return cuota;
 	}
@@ -349,9 +382,16 @@ public class JPGestion_Alta extends JPanel {
 	private JButton getCalcular_cuota() {
 		if (calcular_cuota == null) {
 			calcular_cuota = new JButton();
-			calcular_cuota.setBounds(369, 456, 117, 26);
+			calcular_cuota.setBounds(365, 497, 117, 26);
 			calcular_cuota.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/calculadora2.gif"));
 			calcular_cuota.setText("Calcular");
+			calcular_cuota.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					int cod=Integer.parseInt(codigo.getText());
+					Crearcliente c=new Crearcliente();
+					cuota.setText(c.calcular(cod)+"");
+				}
+			});
 		}
 		return calcular_cuota;
 	}
@@ -367,6 +407,7 @@ public class JPGestion_Alta extends JPanel {
 			codigo_titular.setBounds(new Rectangle(362, 143, 113, 26));
 			codigo_titular.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/Ingenieria_sw2/imagenes/icono-lupa.jpg"));
 			codigo_titular.setText("Buscar");
+			codigo_titular.setVisible(false);
 			codigo_titular.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					JFFamiliar familiar=new JFFamiliar();
@@ -375,10 +416,9 @@ public class JPGestion_Alta extends JPanel {
 					familiar.setLocation(200,200);
 					familiar.setLocationRelativeTo(null);
 					
-					//System.out.println("mouseClicked()"); // TODO Auto-generated Event stub mouseClicked()
 				}
 			});
-			
+	
 		}
 		return codigo_titular;
 	}
@@ -405,24 +445,44 @@ public class JPGestion_Alta extends JPanel {
 	private void jComboBox_tipo_clienteItemStateChanged(ItemEvent evt) {
 		System.out.println("jComboBox_tipo_cliente.itemStateChanged, event="+evt);
 		String s=(String)jComboBox_tipo_cliente.getSelectedItem();
-		System.out.println("milaaaaaaaaaaaaaaaa"+s);
+		
 		if((s.equals("Socio Individual"))||(s.equals("Socio Familiar"))){
-			codigo_label.setVisible(true);
-			codigo.setVisible(true);
-			codigo_titular.setVisible(true);
-			cuota_label.setVisible(true);
-			cuota.setVisible(true);
-			calcular_cuota.setVisible(true);
-			euros_cuota.setVisible(true);
+			if(s.equals("Socio Familiar")){
+				codigo_titular.setVisible(false);
+				codigo_label.setVisible(true);
+				codigo.setVisible(true);
+				//codigo.setEditable(false);
+				cuota_label.setVisible(true);
+				cuota.setVisible(true);
+				calcular_cuota.setVisible(true);
+				euros_cuota.setVisible(true);
+				cuenta.setVisible(true);
+				nº_cuenta.setVisible(false);
+				codigo_titular.setVisible(false);
+			}else {
+				codigo_titular.setVisible(false);
+				codigo_label.setVisible(true);
+				codigo.setVisible(true);
+				//codigo.setEditable(true);
+				cuota_label.setVisible(true);
+				cuota.setVisible(true);
+				calcular_cuota.setVisible(true);
+				euros_cuota.setVisible(true);
+				cuenta.setVisible(true);
+				nº_cuenta.setVisible(true);
+			}
 		}
 		else{
+			codigo_titular.setVisible(false);
 			codigo_label.setVisible(false);
 			codigo.setVisible(false);
 			codigo_titular.setVisible(false);
 			cuota_label.setVisible(false);
 			cuota.setVisible(false);
 			calcular_cuota.setVisible(false);
-			euros_cuota.setVisible(true);
+			euros_cuota.setVisible(false);
+			cuenta.setVisible(false);
+			nº_cuenta.setVisible(false);
 		}
 		//TODO add your code for jComboBox_tipo_cliente.itemStateChanged
 	}
@@ -431,11 +491,37 @@ public class JPGestion_Alta extends JPanel {
 		if(euros_cuota == null) {
 			euros_cuota = new JLabel();
 			euros_cuota.setText("\u20ac");
-			euros_cuota.setBounds(323, 461, 10, 14);
+			euros_cuota.setBounds(319, 502, 10, 14);
 		}
 		return euros_cuota;
 	}
-}
+
+	/**
+	 * This method initializes fecha_nac	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getFecha_nac() {
+		if (fecha_nac == null) {
+			fecha_nac = new JTextField();
+			fecha_nac.setBounds(new Rectangle(234, 420, 109, 20));
+		}
+		return fecha_nac;
+	}
+	public void limpiarinterfaz(){
+		dni.setText("");
+		nombre.setText("");
+		apellido1.setText("");
+		apellido2.setText("");
+		direccion.setText("");
+		poblacion.setText("");
+		telefono.setText("");
+		fecha_nac.setText("");
+		nº_cuenta.setText("");
+		cuota.setText("");
+		codigo.setText("");
+	}
+}  //  @jve:decl-index=0:visual-constraint="5,33"
 
  //  @jve:decl-index=0:visual-constraint="-50,-54"
 
