@@ -11,5 +11,8 @@
         <property name="clave" type="string">
             <column name="clave" length="10" not-null="true" />
         </property>
+        <property name="administrador" type="int">
+            <column name="administrador" length="10" />
+        </property>
     </class>
 </hibernate-mapping>
