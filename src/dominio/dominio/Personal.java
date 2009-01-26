@@ -9,13 +9,21 @@ public class Personal implements java.io.Serializable {
 
 	private String usuario;
 	private String clave;
+	private int administrador;
 
 	public Personal() {
 	}
 
+	public Personal(String usuario, String clave,int administrador) {
+		this.usuario = usuario;
+		this.clave = clave;
+		this.administrador=administrador;
+	}
+	
 	public Personal(String usuario, String clave) {
 		this.usuario = usuario;
 		this.clave = clave;
+
 	}
 
 	public String getUsuario() {
@@ -32,6 +40,14 @@ public class Personal implements java.io.Serializable {
 
 	public void setClave(String clave) {
 		this.clave = clave;
+	}
+	
+	public int getAdministrador() {
+		return this.administrador;
+	}
+
+	public void setAdministrador(int administrador) {
+		this.administrador = administrador;
 	}
 
 }
