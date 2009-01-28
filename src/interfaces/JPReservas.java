@@ -253,7 +253,7 @@ public class JPReservas extends JPanel {
 			tabla=ct.cargar(s);
 			for(int i=0;i<8;i++){
 				for(int j=0;j<6;j++){
-					System.out.println("valor tabla: "+tabla[i][j]);
+					//System.out.println("valor tabla: "+tabla[i][j]);
 					jTable_reservas.setValueAt(tabla[i][j], i, j+1);
 				}
 			}
@@ -268,7 +268,7 @@ public class JPReservas extends JPanel {
 				tabla=ct.cargar(s);
 				for(int i=0;i<8;i++){
 					for(int j=0;j<6;j++){
-						System.out.println("valor tabla: "+tabla[i][j]);
+						//System.out.println("valor tabla: "+tabla[i][j]);
 						jTable_reservas.setValueAt(tabla[i][j], i, j+1);
 					}
 				}

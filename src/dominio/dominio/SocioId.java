@@ -21,6 +21,10 @@ public class SocioId implements java.io.Serializable {
 	public SocioId(String dni) {
 		this.dni = dni;
 	}
+	
+	public SocioId(int codSocio) {
+		this.codSocio = codSocio;
+	}
 
 	public int getCodSocio() {
 		return this.codSocio;
