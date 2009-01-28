@@ -23,6 +23,7 @@ public class Recibos {
 		a.configure();
 		if(tipocliente.equals("Socio")){
 			int cod_soc=a.leerSocio(dni);
+			System.out.println("   "+cod_soc);
 			SocioId sid=new SocioId(cod_soc,dni);
 			Socio s=new Socio(sid);
 			String dia2;
@@ -35,12 +36,12 @@ public class Recibos {
 	        } catch (ParseException ex) {
 	                        ex.printStackTrace();
 	        }
-	        String cuenta=a.leerSocio2(cod_soc);
+	        String cuenta=a.leerSocio2(cod_soc,dni);
 	        System.out.println(dia3);
 	        int id=a.leerRecibo(dia3);
 	        double importe_anterior=a.leerRecibo_importe(dia3);
-	        importe=importe+importe_anterior;
-			Recibo rec=new Recibo(id,dia3,s,cuenta,importe);
+	        double importe2=importe+importe_anterior;
+			Recibo rec=new Recibo(id,dia3,s,cuenta,importe2);
 			a.modRecibo(rec);
 			DetalleRecibo det_rec=new DetalleRecibo(rec,pista,importe,dni);
 			a.crearDetRecibo(det_rec);
@@ -62,12 +63,12 @@ public class Recibos {
 		    } catch (ParseException ex) {
 		              ex.printStackTrace();
 		    }
-		    String cuenta=a.leerSocio2(cod_soc);
+		    String cuenta=a.leerSocio2(cod_soc,dni_socio);
 		    System.out.println(dia3);
 		    int id=a.leerRecibo(dia3);
 		    double importe_anterior=a.leerRecibo_importe(dia3);
-		    importe=importe+importe_anterior;
-			Recibo rec=new Recibo(id,dia3,s,cuenta,importe);
+		    double importe2=importe+importe_anterior;
+			Recibo rec=new Recibo(id,dia3,s,cuenta,importe2);
 			a.modRecibo(rec);
 			DetalleRecibo det_rec=new DetalleRecibo(rec,pista,importe,dni);
 			a.crearDetRecibo(det_rec);
