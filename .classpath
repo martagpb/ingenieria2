@@ -2,18 +2,25 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate3.jar"/>
-	<classpathentry kind="lib" path="lib/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="lib/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
-	<classpathentry kind="lib" path="lib/looks-2.1.4.jar"/>
-	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.5.5.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.5.5.jar"/>
-	<classpathentry kind="lib" path="C:/workspace/Ingenieria/jcalendar-1.3.2/lib/jcalendar-1.3.2.jar"/>
-	<classpathentry kind="lib" path="C:/workspace/Ingenieria/jcalendar-1.3.2/lib/looks-2.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/slf4j-log4j12-1.5.5.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/javassist-3.4.GA.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/looks-2.1.4.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/mysql-connector-java-5.0.8-bin.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/slf4j-api-1.5.5.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ing_2/jcalendar-1.3.2/lib/looks-2.0.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ing_2/jcalendar-1.3.2/lib/jcalendar-1.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/Archivos de programa/MySQL/mysql-connector-java-5.1.7(2)/mysql-connector-java-5.1.7/mysql-connector-java-5.1.7-bin.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-tests.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-1.1.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-1.1.1-sources.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="F:/universidad/PFC/eclipseIDE/eclipse/commons-logging-1.1.1/commons-logging-1.1.1/commons-logging-api-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

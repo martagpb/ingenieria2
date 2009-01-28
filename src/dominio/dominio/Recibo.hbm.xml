@@ -8,7 +8,7 @@
             <column name="idrecibo" />
             <generator class="identity" />
         </id>
-        <many-to-one name="socioFamiliar" class="dominio.dominio.SocioFamiliar" fetch="select">
+        <many-to-one name="socio" class="dominio.dominio.Socio" fetch="select">
             <column name="Dni" length="15" not-null="true" />
             <column name="Cod_Socio" not-null="true" />
         </many-to-one>

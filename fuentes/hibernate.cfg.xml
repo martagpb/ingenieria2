@@ -7,7 +7,7 @@
     	<property name="hibernate.connection.driver_class">
     		com.mysql.jdbc.Driver
     	</property>
-    	<property name="hibernate.connection.password">8887</property>
+    	<property name="hibernate.connection.password">admin</property>
     	<property name="hibernate.connection.url">
     		jdbc:mysql://localhost/prueba
     	</property>

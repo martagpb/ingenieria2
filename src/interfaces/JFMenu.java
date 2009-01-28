@@ -406,7 +406,7 @@ public class JFMenu extends JFrame {
 		System.out.println(s);
 		System.out.println(calend);
 	       switch(calend){
-	            case 0: s=comparar_fecha_actual(s);
+	            case 0: //s=comparar_fecha_actual(s);
 	            		panel_cuatro.fecha(s);
 	                    break;
 	            case 1: s=comparar_fecha_actual(s);

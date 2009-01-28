@@ -4,9 +4,11 @@ package dominio.dominio;
 import java.util.*;
 import java.sql.*;
 import java.sql.Date;
+import java.math.BigInteger;
 
 import dominio.*;
 
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -14,11 +16,15 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
+import org.hibernate.type.NullableType;
+
+import aplicacion.Formato_horario;
 
 
 public class Agente {
 
 	private SessionFactory sessionFactory;
+	private org.hibernate.classic.Session session;
 	
 	public void configure() throws HibernateException {
 		
@@ -47,6 +53,8 @@ public class Agente {
 		new SchemaExport(cfg).create(true, true);
 	}
 	
+	//cogigo de cliente
+
 	
 	// METODOS PARA ARTICULOS 
 	
@@ -239,7 +247,27 @@ public boolean borrarCliente(String dni) throws HibernateException {
 		}
 		
 	}
-
+	
+	public BigInteger cuentanumeroCliente(String dni) throws HibernateException {
+		BigInteger n;
+		Session sesion = sessionFactory.openSession();
+		Transaction tx = null;
+		try {
+			tx = sesion.beginTransaction();
+			Query q=sesion.createSQLQuery("SELECT Count(*) from cliente where cliente.Dni='"+dni+"'");
+			n=(BigInteger)q.uniqueResult();
+			tx.commit();
+			}
+		catch (HibernateException he) {
+		if (tx!=null) tx.rollback();
+		throw he;
+		}
+		finally {
+		sesion.close();
+		}
+		return n;
+		
+	}
 
 /// DETALLE DE RECIBO///
 
@@ -384,7 +412,7 @@ public Horario leerReserva(HorarioId id) throws HibernateException {
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	reserva = (Horario) sesion.load(Horario.class,id);
+	reserva = (Horario) sesion.get(Horario.class,id);
 	
 	tx.commit();
 	}
@@ -400,6 +428,31 @@ public Horario leerReserva(HorarioId id) throws HibernateException {
 	
 }
 
+public String leerReserva(java.util.Date dia3,String pista) throws HibernateException {
+	
+	Horario reserva=new Horario();
+	java.sql.Timestamp dia = new java.sql.Timestamp(dia3.getTime());
+	HorarioId id=new HorarioId(pista,dia);
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	reserva = (Horario) sesion.get(Horario.class,id);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return reserva.getCliente().getDni();
+	
+}
+
 public void modReserva(Horario h) throws HibernateException {
 			
 	Session sesion = sessionFactory.openSession();
@@ -409,7 +462,7 @@ public void modReserva(Horario h) throws HibernateException {
 		Horario item = (Horario) sesion.load(Horario.class,h.getId());
 		item.setImporte(h.getImporte());
 		item.setPagado(h.isPagado());
-		item.setSocioFamiliar(h.getSocioFamiliar());
+		item.setCliente(h.getCliente());
 		tx.commit();
 	}
 	catch (HibernateException he) {
@@ -421,6 +474,85 @@ public void modReserva(Horario h) throws HibernateException {
 	}
 	
 }
+
+
+
+public ArrayList lista_reservas_dni(String dni)throws HibernateException{
+	Iterator r;
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+
+	double importe=0.0;
+	boolean pagado;
+	List lista=null;
+	ArrayList lista2=new ArrayList();
+	System.out.println("mila: "+dni);
+
+	try {
+		tx = sesion.beginTransaction();
+		 lista = sesion.createSQLQuery("Select pista,dia_hora,dni,importe,pagado FROM horario where  horario.dni='"+dni+"'").list();
+		 for(Iterator it=lista.iterator();it.hasNext();){
+		       Object[] row = (Object[]) it.next();
+		   		Horario h=new Horario();
+		   		HorarioId hid=new HorarioId();
+				Cliente c=new Cliente();
+		       hid.setPista((String)row[0]);
+		       System.out.println((String)row[0]);
+     	       Timestamp timeStamp = (Timestamp)row[1];  
+     	       Date date = new Date(timeStamp.getTime()); 
+     	       hid.setDia_hora(date);
+     	      System.out.println(date);
+     	       c.setDni((String)row[2]);
+     	      System.out.println((String)row[2]);
+     	       importe=(Double)row[3];
+     	      System.out.println((Double)row[3]);
+     	       pagado=(Boolean)row[4];
+     	      System.out.println((Boolean)row[4]);
+     	       if(pagado==true)  h=new Horario(hid,c,importe,1);
+     	       else	h=new Horario(hid,c,importe,0);
+     	       lista2.add(h);
+		       
+		     }
+		tx.commit();
+	}
+	
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+
+	return lista2;
+	
+}
+
+public BigInteger hay_reserva(java.util.Date dia3, String pista){
+	BigInteger n;
+	java.sql.Timestamp dia = new java.sql.Timestamp(dia3.getTime());
+	//java.sql.Date dia=new java.sql.Date(dia3.getTime());
+
+	//System.out.println("dia que le paso a bd: "+dia);
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+		tx = sesion.beginTransaction();
+		Query q=sesion.createSQLQuery("SELECT Count(*) from horario where horario.dia_hora='"+dia+"' and horario.pista='"+pista+"'");
+		n=(BigInteger)q.uniqueResult();
+		tx.commit();
+		}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+
+	return n;
+}
+
    //// HORARIOID //
 
 public void crearHorarioId(HorarioId idhorario) throws HibernateException {
@@ -607,7 +739,7 @@ public Pista leerPista(String idpista) throws HibernateException {
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	pista = (Pista) sesion.load(Pista.class,idpista);
+	pista = (Pista) sesion.get(Pista.class,idpista);
 	
 	tx.commit();
 	}
@@ -622,6 +754,29 @@ public Pista leerPista(String idpista) throws HibernateException {
 	return pista;
 	
 }
+
+//public double leerprecio(String idpista){
+//		
+//	double p=0.0;
+//	Session sesion = sessionFactory.openSession();
+//	Transaction tx = null;
+//	try {
+//		tx = sesion.beginTransaction();
+//		Query q=sesion.createSQLQuery("SELECT Precio from pista where pista.Nombre='"+idpista+"'");
+//		p=(Double)q.uniqueResult();
+//		tx.commit();
+//		}
+//	catch (HibernateException he) {
+//	if (tx!=null) tx.rollback();
+//	throw he;
+//	}
+//	finally {
+//	sesion.close();
+//	}
+//	
+//	return p;
+//	
+//}
 
 public void modPista(Pista p) throws HibernateException {
 			
@@ -642,6 +797,7 @@ public void modPista(Pista p) throws HibernateException {
 	}
 	
 }
+
 
 	// RECIBO //	
 
@@ -712,6 +868,55 @@ public Recibo leerRecibo(int r) throws HibernateException {
 	
 }
 
+public int leerRecibo(java.util.Date dia3) throws HibernateException {
+	
+	Recibo recibo=new Recibo();
+	java.sql.Date dia=new java.sql.Date(dia3.getTime()); 		
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	recibo = (Recibo) sesion.load(Recibo.class,dia);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return recibo.getIdrecibo();
+	
+}
+
+public double leerRecibo_importe(java.util.Date dia3) throws HibernateException {
+	
+	Recibo recibo=new Recibo();
+	java.sql.Date dia=new java.sql.Date(dia3.getTime()); 		
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	recibo = (Recibo) sesion.load(Recibo.class,dia);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return recibo.getIdrecibo();
+	
+}
+
+
 public void modRecibo(Recibo r) throws HibernateException {
 			
 	Session sesion = sessionFactory.openSession();
@@ -721,7 +926,7 @@ public void modRecibo(Recibo r) throws HibernateException {
 		Recibo item = (Recibo) sesion.load(Recibo.class,r.getIdrecibo());
 		item.setCuenta(r.getCuenta());
 		item.setFecha(r.getFecha());
-		item.setSocioFamiliar(r.getSocioFamiliar());
+		item.setSocio(r.getSocio());
 		item.setDetalleRecibos(r.getDetalleRecibos());
 		item.setImporte(r.getImporte());
 		
@@ -736,6 +941,10 @@ public void modRecibo(Recibo r) throws HibernateException {
 	}
 	
 }
+
+
+
+
 
    // SOCIO ///
 
@@ -782,7 +991,7 @@ public boolean borrarSocio(SocioId socio) throws HibernateException {
 
 
 
-public Socio leerSocio(int id) throws HibernateException {
+public Socio leerSocio(SocioId id) throws HibernateException {
 	
 	Socio socio=new Socio();
 			
@@ -790,9 +999,9 @@ public Socio leerSocio(int id) throws HibernateException {
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	Query q=sesion.createSQLQuery("SELECT * FROM socio where socio.Cod_Socio='"+id+"'");
-		socio=(Socio)q.uniqueResult();
-	
+	/*Query q=sesion.createSQLQuery("SELECT * FROM socio where socio.Cod_Socio='"+id+"'");
+		socio=(Socio)q.uniqueResult();*/
+		socio = (Socio) sesion.get(Socio.class,id);
 		/*query1.setLong("aId",Long.valueOf(1));
 		List list1 = query1.list();
 		Iterator iter1 = list1.iterator();
@@ -812,15 +1021,16 @@ public Socio leerSocio(int id) throws HibernateException {
 	
 }
 
-
-public int leerSocio(String dni){
-	int n;
+public int leerSocio(String dni) throws HibernateException {
+	
+	Socio socio=new Socio();
+	SocioId socioid=new SocioId(dni);	
 	Session sesion = sessionFactory.openSession();
 	Transaction tx = null;
 	try {
 	tx = sesion.beginTransaction();
-	Query q=sesion.createSQLQuery("SELECT Cod_Socio FROM socio where socio.dni='"+dni+"'");
-		n=(Integer)q.uniqueResult();
+	socio = (Socio) sesion.load(Socio.class,socioid);
+	
 	tx.commit();
 	}
 	catch (HibernateException he) {
@@ -831,9 +1041,124 @@ public int leerSocio(String dni){
 	sesion.close();
 	}
 	
-	return n;
+	return socio.getId().getCodSocio();
 	
 }
+
+public String leerSocio(int cod_soc) throws HibernateException {
+	
+	Socio socio=new Socio();
+
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	socio = (Socio) sesion.load(Socio.class,cod_soc);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return socio.getCliente().getDni();
+	
+}
+
+public String leerSocio2(int cod_soc) throws HibernateException {
+	
+	Socio socio=new Socio();
+	
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	socio = (Socio) sesion.load(Socio.class,cod_soc);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return socio.getCuentaBanco();
+	
+}
+
+//public String consultar_cuenta(int cod_soc){
+//	String n;
+//	Session sesion = sessionFactory.openSession();
+//	Transaction tx = null;
+//	try {
+//	tx = sesion.beginTransaction();
+//	Query q=sesion.createSQLQuery("SELECT cuenta_banco  FROM Socio where socio.cod_socio='"+cod_soc+"'");
+//		n=(String)q.uniqueResult();
+//	tx.commit();
+//	}
+//	catch (HibernateException he) {
+//	if (tx!=null) tx.rollback();
+//	throw he;
+//	}
+//	finally {
+//	sesion.close();
+//	}
+//	
+//	return n;
+//}
+
+
+//public int leerSocio(String dni){
+//	int n;
+//	Session sesion = sessionFactory.openSession();
+//	Transaction tx = null;
+//	try {
+//	tx = sesion.beginTransaction();
+//	Query q=sesion.createSQLQuery("SELECT Cod_Socio FROM socio where socio.dni='"+dni+"'");
+//		n=(Integer)q.uniqueResult();
+//	tx.commit();
+//	}
+//	catch (HibernateException he) {
+//	if (tx!=null) tx.rollback();
+//	throw he;
+//	}
+//	finally {
+//	sesion.close();
+//	}
+//	
+//	return n;
+//	
+//}
+
+//public String leerSocio(int cod_soc){
+//	String n;
+//	Session sesion = sessionFactory.openSession();
+//	Transaction tx = null;
+//	try {
+//	tx = sesion.beginTransaction();
+//	Query q=sesion.createSQLQuery("SELECT dni FROM socio where socio.cod_socio='"+cod_soc+"'");
+//		n=(String)q.uniqueResult();
+//	tx.commit();
+//	}
+//	catch (HibernateException he) {
+//	if (tx!=null) tx.rollback();
+//	throw he;
+//	}
+//	finally {
+//	sesion.close();
+//	}
+//	
+//	return n;
+//	
+//}
+
 public int maxSocio(){
 	int n;
 	Session sesion = sessionFactory.openSession();
@@ -856,6 +1181,8 @@ public int maxSocio(){
 	
 }
 
+
+
 public void modSocio(Socio s) throws HibernateException {
 			
 	Session sesion = sessionFactory.openSession();
@@ -877,6 +1204,28 @@ public void modSocio(Socio s) throws HibernateException {
 	finally {
 	sesion.close();
 	}
+	
+}
+
+public BigInteger cuentanumeroSocio(String dni) throws HibernateException {
+	BigInteger n;
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+		tx = sesion.beginTransaction();
+		Query q=sesion.createSQLQuery("SELECT Count(*) from socio where socio.Dni='"+dni+"'");
+		n=(BigInteger)q.uniqueResult();
+		tx.commit();
+		}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+
+	return n;
 	
 }
      //  SOCIO FAMILIAR //
@@ -968,4 +1317,49 @@ public SocioFamiliar leerSocioFamiliar (SocioFamiliarId s) throws HibernateExcep
 	}
 	
 }*/
+
+public int leerSocioFamiliar (String dni) throws HibernateException {
+	
+	SocioFamiliar socioFamiliar=new SocioFamiliar();
+			
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+	tx = sesion.beginTransaction();
+	socioFamiliar = (SocioFamiliar) sesion.load(SocioFamiliar.class,dni);
+	
+	tx.commit();
+	}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	
+	return socioFamiliar.getId().getCodSocio();
+	
+}
+
+public BigInteger cuentanumeroSocioFamiliar(String dni) throws HibernateException {
+	BigInteger n;
+	Session sesion = sessionFactory.openSession();
+	Transaction tx = null;
+	try {
+		tx = sesion.beginTransaction();
+		Query q=sesion.createSQLQuery("SELECT Count(*) from socio_familiar where socio_familiar.Dni='"+dni+"'");
+		n=(BigInteger)q.uniqueResult();
+		tx.commit();
+		}
+	catch (HibernateException he) {
+	if (tx!=null) tx.rollback();
+	throw he;
+	}
+	finally {
+	sesion.close();
+	}
+	return n;
+	
+}
 }

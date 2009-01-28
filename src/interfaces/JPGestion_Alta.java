@@ -1,6 +1,7 @@
 package interfaces;
 import aplicacion.*;
 import dominio.dominio.*;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
@@ -21,6 +22,10 @@ import javax.swing.JTextField;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.awt.GridBagLayout;
+import javax.swing.JFrame;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 
 /**
@@ -70,13 +75,26 @@ public class JPGestion_Alta extends JPanel {
 	private JLabel Fecha_nacLabel = null;
 	private JTextField fecha_nac = null;
 	private Date fecha_nacimiento;
-
+	private JFrame jFFamiliar = null;  //  @jve:decl-index=0:visual-constraint="623,444"
+	private JPanel jContentPane = null;
+	private JLabel dni_titular_label1 = null;
+	private JTextField dni_titular1 = null;
+	private JButton buscar1 = null;
+	private JLabel cod_label1 = null;
+	private JTextField cod_socio1 = null;
+	private JLabel nom_label1 = null;
+	private JTextField nombre_familiar1 = null;
+	private JLabel apellidos_label1 = null;
+	private JTextField apellidos_familiar1 = null;
+	private JButton aceptar_familiar1 = null;
+	String DNI_titular=null;
 	/**
 	 * This is the default constructor
 	 */
 	public JPGestion_Alta() {
 		super();
 		initialize();
+
 		
 	}
 
@@ -171,6 +189,7 @@ public class JPGestion_Alta extends JPanel {
 		cuota.setVisible(false);
 		calcular_cuota.setVisible(false);
 		euros_cuota.setVisible(false);
+
 		
 	}
 
@@ -267,6 +286,7 @@ public class JPGestion_Alta extends JPanel {
 		if (codigo == null) {
 			codigo = new JTextField();
 			codigo.setBounds(234, 151, 108, 20);
+			codigo.setEditable(false);
 		}
 		return codigo;
 	}
@@ -318,6 +338,9 @@ public class JPGestion_Alta extends JPanel {
 						double mensualidad=Double.parseDouble(cuota.getText());
 						resultado=c.añadirSocio(dni.getText(),mensualidad, nº_cuenta.getText());
 					}
+					/*if (s.equalsIgnoreCase("Socio Familiar")){
+						resultado=c.añadirSocioFam(dni.getText(),codigo.getText());
+					}*/
 					
 					
 					
@@ -370,6 +393,7 @@ public class JPGestion_Alta extends JPanel {
 		if (cuota == null) {
 			cuota = new JTextField();
 			cuota.setBounds(new Rectangle(229, 499, 84, 20));
+			cuota.setEditable(false);
 		}
 		return cuota;
 	}
@@ -389,7 +413,8 @@ public class JPGestion_Alta extends JPanel {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					int cod=Integer.parseInt(codigo.getText());
 					Crearcliente c=new Crearcliente();
-					cuota.setText(c.calcular(cod)+"");
+					SocioId sid=new SocioId(Integer.parseInt(codigo.getText()), DNI_titular);
+					cuota.setText(c.calcular(sid)+"");
 				}
 			});
 		}
@@ -410,18 +435,15 @@ public class JPGestion_Alta extends JPanel {
 			codigo_titular.setVisible(false);
 			codigo_titular.addMouseListener(new java.awt.event.MouseAdapter() {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
-					JFFamiliar familiar=new JFFamiliar();
-					familiar.setVisible(true);
-					familiar.setSize(500,300);
-					familiar.setLocation(200,200);
-					familiar.setLocationRelativeTo(null);
-					
+					getJFFamiliar();
+	
 				}
 			});
-	
+				
 		}
 		return codigo_titular;
 	}
+
 	
 	private JComboBox getJComboBox_tipo_cliente() {
 		if(jComboBox_tipo_cliente == null) {
@@ -448,7 +470,7 @@ public class JPGestion_Alta extends JPanel {
 		
 		if((s.equals("Socio Individual"))||(s.equals("Socio Familiar"))){
 			if(s.equals("Socio Familiar")){
-				codigo_titular.setVisible(false);
+				codigo_titular.setVisible(true);
 				codigo_label.setVisible(true);
 				codigo.setVisible(true);
 				//codigo.setEditable(false);
@@ -456,9 +478,9 @@ public class JPGestion_Alta extends JPanel {
 				cuota.setVisible(true);
 				calcular_cuota.setVisible(true);
 				euros_cuota.setVisible(true);
-				cuenta.setVisible(true);
+				cuenta.setVisible(false);
 				nº_cuenta.setVisible(false);
-				codigo_titular.setVisible(false);
+				
 			}else {
 				codigo_titular.setVisible(false);
 				codigo_label.setVisible(true);
@@ -520,6 +542,164 @@ public class JPGestion_Alta extends JPanel {
 		nº_cuenta.setText("");
 		cuota.setText("");
 		codigo.setText("");
+	}
+
+	/**
+	 * This method initializes jFFamiliar	
+	 * 	
+	 * @return javax.swing.JFrame	
+	 */
+	private JFrame getJFFamiliar() {
+		if (jFFamiliar == null) {
+			jFFamiliar = new JFrame();
+			jFFamiliar.setVisible(true);
+			jFFamiliar.setSize(new Dimension(410, 292));
+			jFFamiliar.setContentPane(getJContentPane());
+		}
+		return jFFamiliar;
+	}
+
+	/**
+	 * This method initializes jContentPane	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getJContentPane() {
+		if (jContentPane == null) {
+			apellidos_label1 = new JLabel();
+			apellidos_label1.setBounds(new Rectangle(59, 156, 72, 16));
+			apellidos_label1.setText("Apellidos");
+			nom_label1 = new JLabel();
+			nom_label1.setBounds(new Rectangle(60, 122, 59, 16));
+			nom_label1.setText("Nombre");
+			cod_label1 = new JLabel();
+			cod_label1.setBounds(new Rectangle(58, 87, 74, 16));
+			cod_label1.setText("Codigo Socio");
+			dni_titular_label1 = new JLabel();
+			dni_titular_label1.setBounds(new Rectangle(34, 29, 98, 19));
+			dni_titular_label1.setText("DNI del Titular");
+			dni_titular_label1.setFont(new Font("Dialog", Font.BOLD, 14));
+			jContentPane = new JPanel();
+			jContentPane.setLayout(null);
+			jContentPane.add(dni_titular_label1, null);
+			jContentPane.add(getDni_titular1(), null);
+			jContentPane.add(getBuscar1(), null);
+			jContentPane.add(cod_label1, null);
+			jContentPane.add(getCod_socio1(), null);
+			jContentPane.add(nom_label1, null);
+			jContentPane.add(getNombre_familiar1(), null);
+			jContentPane.add(apellidos_label1, null);
+			jContentPane.add(getApellidos_familiar1(), null);
+			jContentPane.add(getAceptar_familiar1(), null);
+		}
+		return jContentPane;
+	}
+
+	/**
+	 * This method initializes dni_titular1	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getDni_titular1() {
+		if (dni_titular1 == null) {
+			dni_titular1 = new JTextField();
+			dni_titular1.setBounds(new Rectangle(143, 29, 117, 20));
+		}
+		return dni_titular1;
+	}
+
+	/**
+	 * This method initializes buscar1	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getBuscar1() {
+		if (buscar1 == null) {
+			buscar1 = new JButton();
+			buscar1.setBounds(new Rectangle(276, 24, 103, 33));
+			buscar1.setText("Buscar");
+			buscar1.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/imagenes/icono-lupa.jpg"));
+			buscar1.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					//System.out.println("mouseClicked()"); // TODO Auto-generated Event stub mouseClicked()
+					Crearcliente c =new Crearcliente();
+					Cliente cl=c.cargarSocio(dni_titular1.getText());
+					nombre_familiar1.setText(cl.getNombre());
+					apellidos_familiar1.setText(cl.getApellido1()+" "+cl.getApellido2());
+					int n=c.devolverSocio(dni_titular1.getText());
+					cod_socio1.setText(n+"");
+				}
+			});
+		}
+		return buscar1;
+	}
+
+	/**
+	 * This method initializes cod_socio1	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getCod_socio1() {
+		if (cod_socio1 == null) {
+			cod_socio1 = new JTextField();
+			cod_socio1.setBounds(new Rectangle(143, 87, 101, 20));
+		}
+		return cod_socio1;
+	}
+
+	/**
+	 * This method initializes nombre_familiar1	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getNombre_familiar1() {
+		if (nombre_familiar1 == null) {
+			nombre_familiar1 = new JTextField();
+			nombre_familiar1.setBounds(new Rectangle(144, 117, 201, 20));
+		}
+		return nombre_familiar1;
+	}
+
+	/**
+	 * This method initializes apellidos_familiar1	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getApellidos_familiar1() {
+		if (apellidos_familiar1 == null) {
+			apellidos_familiar1 = new JTextField();
+			apellidos_familiar1.setBounds(new Rectangle(146, 153, 199, 20));
+		}
+		return apellidos_familiar1;
+	}
+
+	/**
+	 * This method initializes aceptar_familiar1	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getAceptar_familiar1() {
+		if (aceptar_familiar1 == null) {
+			aceptar_familiar1 = new JButton();
+			aceptar_familiar1.setBounds(new Rectangle(166, 198, 102, 29));
+			aceptar_familiar1.setText("Aceptar");
+			aceptar_familiar1.setIcon(new ImageIcon("F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/imagenes/ok.jpg"));
+			aceptar_familiar1.addMouseListener(new java.awt.event.MouseAdapter() {
+				public void mouseClicked(java.awt.event.MouseEvent e) {
+					//System.out.println("mouseClicked()"); // TODO Auto-generated Event stub mouseClicked()
+					jFFamiliar.setVisible(false);
+
+					codigo.setText(cod_socio1.getText());
+					DNI_titular=dni_titular1.getText();
+					dni_titular1.setText("");
+					nombre_familiar1.setText("");
+					apellidos_familiar1.setText("");
+					cod_socio1.setText("");
+					
+				}
+			});
+		}
+		return aceptar_familiar1;
 	}
 }  //  @jve:decl-index=0:visual-constraint="5,33"
 

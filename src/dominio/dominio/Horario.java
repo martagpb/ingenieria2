@@ -8,19 +8,19 @@ package dominio.dominio;
 public class Horario implements java.io.Serializable {
 
 	private HorarioId id;
-	private SocioFamiliar socioFamiliar;
-	private Pista pista;
+	private Cliente cliente;
+	//private Pista pista;
 	private double importe;
-	private boolean pagado;
+	private int pagado;
 
 	public Horario() {
 	}
 
-	public Horario(HorarioId id, SocioFamiliar socioFamiliar, Pista pista,
-			double importe, boolean pagado) {
+	public Horario(HorarioId id, Cliente cliente, 
+			double importe, int pagado) {
 		this.id = id;
-		this.socioFamiliar = socioFamiliar;
-		this.pista = pista;
+		this.cliente = cliente;
+		//this.pista = pista;
 		this.importe = importe;
 		this.pagado = pagado;
 	}
@@ -33,21 +33,21 @@ public class Horario implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public SocioFamiliar getSocioFamiliar() {
-		return this.socioFamiliar;
+	public Cliente getCliente() {
+		return this.cliente;
 	}
 
-	public void setSocioFamiliar(SocioFamiliar socioFamiliar) {
-		this.socioFamiliar = socioFamiliar;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
-	public Pista getPista() {
-		return this.pista;
-	}
-
-	public void setPista(Pista pista) {
-		this.pista = pista;
-	}
+//	public Pista getPista() {
+//		return this.pista;
+//	}
+//
+//	public void setPista(Pista pista) {
+//		this.pista = pista;
+//	}
 
 	public double getImporte() {
 		return this.importe;
@@ -57,11 +57,11 @@ public class Horario implements java.io.Serializable {
 		this.importe = importe;
 	}
 
-	public boolean isPagado() {
+	public int isPagado() {
 		return this.pagado;
 	}
 
-	public void setPagado(boolean pagado) {
+	public void setPagado(int pagado) {
 		this.pagado = pagado;
 	}
 

@@ -57,10 +57,10 @@ public class Crearcliente {
 		int n=a.leerSocio(Dni);
 		return n;
 	}
-	public double calcular(int n){
+	public double calcular(SocioId id){
 		Agente a=new Agente();
 		a.configure();
-		Socio s= a.leerSocio(n);
+		Socio s= a.leerSocio(id);
 		s.setNumeroMiembros(s.getNumeroMiembros()+1);
 		double resul=s.getNumeroMiembros()+1*s.getCuota();
 		s.setCuota(resul);
@@ -68,5 +68,17 @@ public class Crearcliente {
 		return resul;
 	}
 	
+//	public boolean añadirSocioFam(String dni, String codigo){
+//		Agente a =new Agente();
+//		a.configure();
+//		SocioId id=new SocioId(Integer.parseInt(codigo),dni);
+//		Date fecha =new Date();
+//		Cliente c=a.leerCliente(dni);
+//		Socio socio=new Socio(id,c,fecha,,0,cuenta);
+//		a.crearSocio(socio);
+//		Socio s=new Socio()
+//		SocioFamiliar sf=new SocioFamiliar();
+//		sf.set
+//	}
 }
 

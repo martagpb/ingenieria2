@@ -17,5 +17,8 @@
         <property name="importe" type="double">
             <column name="Importe" precision="22" scale="0" not-null="true" />
         </property>
+        <property name="dni" type="string">
+            <column name="Dni" length="15" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>
