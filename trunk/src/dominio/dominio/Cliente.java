@@ -23,6 +23,10 @@ public class Cliente implements java.io.Serializable {
 
 	public Cliente() {
 	}
+	
+	public Cliente(String dni){
+		this.dni=dni;
+	}
 
 	public Cliente(String dni, String nombre, String apellido1,
 			String direccion, String localidad) {

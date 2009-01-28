@@ -12,7 +12,7 @@ import java.util.Set;
 public class Recibo implements java.io.Serializable {
 
 	private int idrecibo;
-	private SocioFamiliar socioFamiliar;
+	private Socio socio;
 	private Date fecha;
 	private String cuenta;
 	private double importe;
@@ -20,18 +20,29 @@ public class Recibo implements java.io.Serializable {
 
 	public Recibo() {
 	}
-
-	public Recibo(SocioFamiliar socioFamiliar, Date fecha, String cuenta,
+	
+	public Recibo(Date fecha,Socio socio,  String cuenta,
 			double importe) {
-		this.socioFamiliar = socioFamiliar;
+		this.socio = socio;
 		this.fecha = fecha;
 		this.cuenta = cuenta;
 		this.importe = importe;
 	}
+	
+	public Recibo(int idrecibo,Date fecha,Socio socio,  String cuenta,
+			double importe) {
+		this.idrecibo=idrecibo;
+		this.socio = socio;
+		this.fecha = fecha;
+		this.cuenta = cuenta;
+		this.importe = importe;
+	}
+	
+	
 
-	public Recibo(SocioFamiliar socioFamiliar, Date fecha, String cuenta,
+	public Recibo(Date fecha,Socio socio, String cuenta,
 			double importe, Set detalleRecibos) {
-		this.socioFamiliar = socioFamiliar;
+		this.socio = socio;
 		this.fecha = fecha;
 		this.cuenta = cuenta;
 		this.importe = importe;
@@ -46,12 +57,12 @@ public class Recibo implements java.io.Serializable {
 		this.idrecibo = idrecibo;
 	}
 
-	public SocioFamiliar getSocioFamiliar() {
-		return this.socioFamiliar;
+	public Socio getSocio() {
+		return this.socio;
 	}
 
-	public void setSocioFamiliar(SocioFamiliar socioFamiliar) {
-		this.socioFamiliar = socioFamiliar;
+	public void setSocio(Socio socio) {
+		this.socio = socio;
 	}
 
 	public Date getFecha() {

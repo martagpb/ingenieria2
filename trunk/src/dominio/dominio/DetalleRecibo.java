@@ -11,14 +11,16 @@ public class DetalleRecibo implements java.io.Serializable {
 	private Recibo recibo;
 	private String concepto;
 	private double importe;
+	private String dni;
 
 	public DetalleRecibo() {
 	}
 
-	public DetalleRecibo(Recibo recibo, String concepto, double importe) {
+	public DetalleRecibo(Recibo recibo, String concepto, double importe,String dni) {
 		this.recibo = recibo;
 		this.concepto = concepto;
 		this.importe = importe;
+		this.dni=dni;
 	}
 
 	public int getIddetalleRecibo() {
@@ -51,6 +53,14 @@ public class DetalleRecibo implements java.io.Serializable {
 
 	public void setImporte(double importe) {
 		this.importe = importe;
+	}
+	
+	public String getDni() {
+		return this.dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 }

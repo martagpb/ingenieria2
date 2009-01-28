@@ -23,8 +23,8 @@ public class Sesion {
 		
 			else devolver=false;
 		}
-		/*Personal p=new Personal("admin","hola");
-		a.crearPersonal(p);*/
+//		Personal p=new Personal("mila","hola2");
+//		a.crearPersonal(p);
 		return devolver;	
 	}
 

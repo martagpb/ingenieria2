@@ -97,7 +97,7 @@ public class JFFamiliar extends JFrame {
 		}
 		return DNI;
 	}
-
+	
 	/**
 	 * This method initializes codigo	
 	 * 	
@@ -160,14 +160,16 @@ public class JFFamiliar extends JFrame {
 		return aceptar;
 	}
 	private void aceptar_1MouseClicked(MouseEvent evt) {
-		// Devolveriamos el cod_Socio
+		
 		this.setVisible(false);
+		
 		DNI.setText("");
 		nombre.setText("");
 		apellidos.setText("");
 		codigo.setText("");
 		
 	}
+	
 
 	/**
 	 * This method initializes buscar	

@@ -2,6 +2,7 @@ package dominio.dominio;
 
 // Generated 08-ene-2009 19:15:20 by Hibernate Tools 3.2.4.CR1
 
+import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -10,16 +11,21 @@ import java.util.Date;
 public class HorarioId implements java.io.Serializable {
 
 	private String pista;
-	private Date dia;
-	private Date hora;
+	private Date dia_hora;
+
 
 	public HorarioId() {
 	}
 
-	public HorarioId(String pista, Date dia, Date hora) {
+	public HorarioId(String pista, Date dia_hora) {
 		this.pista = pista;
-		this.dia = dia;
-		this.hora = hora;
+		this.dia_hora = dia_hora;
+
+	}
+	
+	public HorarioId(Date dia_hora) {
+		this.dia_hora = dia_hora;
+
 	}
 
 	public String getPista() {
@@ -30,21 +36,14 @@ public class HorarioId implements java.io.Serializable {
 		this.pista = pista;
 	}
 
-	public Date getDia() {
-		return this.dia;
+	public Date getDia_hora() {
+		return this.dia_hora;
 	}
 
-	public void setDia(Date dia) {
-		this.dia = dia;
+	public void setDia_hora(Date dia_hora) {
+		this.dia_hora = dia_hora;
 	}
 
-	public Date getHora() {
-		return this.hora;
-	}
-
-	public void setHora(Date hora) {
-		this.hora = hora;
-	}
 
 	public boolean equals(Object other) {
 		if ((this == other))
@@ -58,12 +57,10 @@ public class HorarioId implements java.io.Serializable {
 		return ((this.getPista() == castOther.getPista()) || (this.getPista() != null
 				&& castOther.getPista() != null && this.getPista().equals(
 				castOther.getPista())))
-				&& ((this.getDia() == castOther.getDia()) || (this.getDia() != null
-						&& castOther.getDia() != null && this.getDia().equals(
-						castOther.getDia())))
-				&& ((this.getHora() == castOther.getHora()) || (this.getHora() != null
-						&& castOther.getHora() != null && this.getHora()
-						.equals(castOther.getHora())));
+				&& ((this.getDia_hora() == castOther.getDia_hora()) || (this.getDia_hora() != null
+						&& castOther.getDia_hora() != null && this.getDia_hora().equals(
+						castOther.getDia_hora())));
+				
 	}
 
 	public int hashCode() {
@@ -72,9 +69,8 @@ public class HorarioId implements java.io.Serializable {
 		result = 37 * result
 				+ (getPista() == null ? 0 : this.getPista().hashCode());
 		result = 37 * result
-				+ (getDia() == null ? 0 : this.getDia().hashCode());
-		result = 37 * result
-				+ (getHora() == null ? 0 : this.getHora().hashCode());
+				+ (getDia_hora() == null ? 0 : this.getDia_hora().hashCode());
+		
 		return result;
 	}
 
