@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="administrador"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/slf4j-log4j12-1.5.5.jar"/>
 	<classpathentry kind="lib" path="F:/universidad/5º/Ingernieria sw II/repositorio2/ultimo/lib/antlr-2.7.6.jar"/>

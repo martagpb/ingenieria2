@@ -18,7 +18,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.tool.hbm2ddl.SchemaExport;
 import org.hibernate.type.NullableType;
 
-import aplicacion.Formato_horario;
+import comunicaciones.Formato_horario;
+
+
 
 
 public class Agente {
